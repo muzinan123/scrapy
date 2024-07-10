@@ -1,0 +1,61 @@
+{% extends "starter.html" %}
+
+{% block contentheader %}
+检索关键词<span class="pull-left-container">
+  {%- for kw in keywords %}
+  <small class="label bg-yellow">{{ kw }}</small>
+  {% endfor %}
+</span>
+{% endblock  %}
+{% block content %}
+<br/>
+<div class="column three-fourths codesearch-results" style="min-height: 901px;">
+<div id="code_search_results">
+  <div class="code-list">
+    {% if not pagination.items %}
+    <h5>暂无任何检索记录!</h5>
+    {% endif %}
+      <!-- records -->
+      {%- for item in pagination.items %}
+      <div class="code-list-item code-list-item-public ">
+        {{ render_markup(item.avatar) }}
+        <span class="language">{{ item.lang }}</span>
+        <p class="title">
+          <a href="{{ 'https://github.com' + item.full_name }}" target="blank">{{ item.full_name[1:] }}</a>
+          –
+          <a href="{{ 'https://github.com' + item.file_path }}" title="{{ item.file_name }}" target="blank">{{ item.file_name }}</a> <br>
+        </p>
+        {{ render_markup(item.snippet) }}
+
+        <a class="btn btn-danger link"  href="{{ url_for('get_by_full_name', owner=item.owner, name=item.name, enabled=False) }}" data-method="patch">加入白名单</a>
+      </div>
+      {% endfor %}
+
+  </div>
+
+  <div class="paginate-container">
+    <div class="pagination" data-pjax="true">
+      {%- for page in pagination.iter_pages() %}
+      {% if page %}
+      {% if page != pagination.page %}
+        <a href="{{ url_for(request.endpoint, page=page) }}">{{ page }}</a>
+      {% else %}
+        <a class="disabled" href="#"><strong>{{ page }}</strong></>
+      {% endif %}
+{% else %}
+      <span class=ellipsis>…</span>
+      {% endif %}
+      {%- endfor %}
+      {% if pagination.has_next %}
+      <a href="{{ url_for(request.endpoint, page=pagination.page + 1)
+      }}">Next &raquo;</a>
+    {% endif %}
+    </div>
+  </div>
+<!-- end records -->      
+</div>
+</div>
+
+<!-- page script -->
+<script src="/static/js/records.js"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "starter.html" %}
+{% block content %}
+<div class="box">
+  <div class="box-body">
+    <table id="repos" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>全名</th>
+          <th>描述</th>
+          <th>编程语言</th>
+          <th>状态</th>
+          <th>用户</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for repo in repos %}
+        <tr>
+          {% set rowloop = loop %}
+          <td><a href="/view/github_records?full_name={{ repo.full_name }}">{{ repo.full_name }}</td>
+          <td>{{ repo.description }}</td>
+          <td>{{ repo.lang }}</td>
+          <td>{{ repo.enabled }}</td>
+          <td>{{ repo.owner }}</td>
+          <td>
+              {% for link in repo._links %}
+            <a class="btn btn-primary link" id="{{ link.rel }}" href="{{ link.href }}" data-method="{{ link.method }}">{{ link.label }}</a>
+                {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+
+  <!-- page script -->
+<script src="/static/js/repos.js"></script>
+{% endblock %}

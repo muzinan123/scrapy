@@ -1,0 +1,4 @@
+requests==2.22.0
+#za_ec==0.0.1
+GitPython==3.1.0
+python-gitlab
