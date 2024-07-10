@@ -1,1 +1,0 @@
-https://git.zhonganinfo.com/zainfo/xflowcloud-zatlas-frontend.git

@@ -1,7 +1,0 @@
-nohup: ignoring input
-Traceback (most recent call last):
-  File "run_list.py", line 5, in <module>
-    from scanner import Scanner
-  File "/alidata1/app/git-dependency-track/scanner.py", line 10, in <module>
-    from za_ec import za_dec
-ImportError: No module named za_ec
